@@ -1,0 +1,64 @@
+{% extends 'store/main.html' %}
+{%load static %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="box-element" id="form-wrapper">
+            <form id="form">
+                <div id="user-info">
+                    <div class="form-field">
+                        <input placeholder="Name.." name="name" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-field">
+                        <input placeholder="Email.." name="email" type="email" class="form-control" required>
+                    </div>
+                </div>
+                <div id="shipping-info">
+                    <hr>
+                    <p>Shipping Information:</p>
+                    <hr>
+                    <div class="form-field">
+                        <input placeholder="Address.." name="address" type="text" class="form-control">
+                    </div>
+                    <div class="form-field">
+                        <input placeholder="City.." name="city" type="text" class="form-control">
+                    </div>
+                    <div class="form-field">
+                        <input placeholder="State.." name="state" type="text" class="form-control">
+                    </div>
+                    <div class="form-field">
+                        <input placeholder="Zip code.." name="zipcode" type="text" class="form-control">
+                    </div>
+                </div>
+                <hr>
+                <input id="form-button" class="btn btn-success btn-block" type="submmit" value="Continue">
+            </form>
+        </div>
+        <br>
+        <div class="box-element hidden" id="payment-info">
+            <small>Paypal options</small>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="box-element">
+            <a href="{% url 'cart' %}" class="btn btn-outline-dark">&#x2190;Back to Cart</a>
+            <hr>
+            <h3>Order Summary </h3>
+            <hr>
+            {% for item in items %}
+            <div class="cart-row">
+                <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+                <div style="flex:2">{{item.product.name}}</div>
+                <div style="flex:1">${{item.product.price|floatformat:2}}</div>
+                <div style="flex:1"><p>{{item.quantity}}</p></div>
+            </div>
+            {% endfor %}
+            <h5>Items:  {{order.get_cart_items}}</h5>
+            <h5>Total:  ${{order.get_cart_total|floatformat:2}}</h5>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
